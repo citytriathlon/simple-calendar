@@ -1,8 +1,27 @@
 <html>
     <body>
-        Hello World
-        {% for key,value in data.items %}
-            <p>{{value.name}}</p>
-        {% endfor %}
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4">EVENTS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>name</td>
+                    <td>description</td>
+                    <td>location</td>
+                    <td>organizer</td>
+                </tr>
+                    {% for key,value in data.items %}
+                        <tr>
+                            <td>{{value.name}}</td>
+                            <td>{{value.description}}</td>
+                            <td>{{value.location}}</td>
+                            <td>{{value.organizer}}</td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>
