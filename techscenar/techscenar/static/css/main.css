@@ -45,12 +45,8 @@ a {
   text-decoration: none;
 }
 
-section {
-  padding: .5em;
-}
-
 section .events {
-  margin-bottom: 1em;
+  margin: 0 .5em 1em .5em;
   background: white;
   border-radius: 5px 20px 20px 20px;
   -webkit-box-shadow: 1px 1px 3px var(--primary-color);
@@ -100,7 +96,7 @@ section .events .events-vert .extend-button {
 section .events .description {
   display: none;
   overflow: hidden;
-  background: darkgray;
+  background: #cfcfcf;
   border-radius: 0px 0px 20px 20px;
 }
 
@@ -115,6 +111,11 @@ section .events .description .container {
   padding: 4px;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+.date {
+  background-color: aquamarine;
+  margin: 0;
 }
 
 nav.mobile-menu {

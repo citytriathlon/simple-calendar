@@ -29,31 +29,34 @@
         </div>
     </div>
     <section>
-        {% for key,value in data.items %}
-        <div class="events">
-            <div class="events-vert">
-                <div class="event">
-                    <div class="container-name">
-                        <a href="#" class="name">{{value.name}}</a>
+        <div class="date">
+            <div>28.6</div>
+            {% for key,value in data.items %}
+            <div class="events">
+                <div class="events-vert">
+                    <div class="event">
+                        <div class="container-name">
+                            <a href="#" class="name">{{value.name}}</a>
+                        </div>
+                        <div class="container-time-who">
+                            <a href="#" class="timerange">{{value.begin}} - {{value.end}}</a>
+                            <a href="#" class="spacing">|</a>
+                            <a href="#" class="who">{{value.organizer}}</a>
+                        </div>
                     </div>
-                    <div class="container-time-who">
-                        <a href="#" class="timerange">{{value.begin}} - {{value.end}}</a>
-                        <a href="#" class="spacing">|</a>
-                        <a href="#" class="who">{{value.organizer}}</a>
+                    <div class="extend-button">
+                        <p><i class="arrow"></i></p>
                     </div>
                 </div>
-                <div class="extend-button">
-                    <p><i class="arrow"></i></p>
+                <div class="description">
+                    <div class="container">
+                        <div>{{value.location}}</div>
+                        <div>{{value.description}}</div>
+                    </div>
                 </div>
             </div>
-            <div class="description">
-                <div class="container">
-                    <div>{{value.location}}</div>
-                    <div>{{value.description}}</div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </section>
 
     <script>

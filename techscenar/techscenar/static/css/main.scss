@@ -41,9 +41,8 @@ a {
 }
 
 section {
-    padding: .5em;
     .events{
-        margin-bottom: 1em;
+        margin: 0 .5em 1em .5em;
         background: white;
         border-radius: 5px 20px 20px 20px;
         box-shadow: 1px 1px 3px var(--primary-color);
@@ -76,7 +75,7 @@ section {
         .description {
             display: none;
             overflow: hidden;
-            background: darkgray;
+            background: rgb(207, 207, 207);
             border-radius: 0px 0px 20px 20px;
             .container{
                 margin: 0em .5em .5em .5em;
@@ -93,7 +92,10 @@ section {
     -webkit-transform: rotate(45deg);
 }
 
-
+.date {
+    background-color: aquamarine;
+    margin: 0;
+}
 
 // .active, .collapsible:hover {
 //     background-color: #ccc;
