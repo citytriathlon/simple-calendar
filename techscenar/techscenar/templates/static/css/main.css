@@ -1,4 +1,4 @@
-@import url('href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
 :root {
   --primary-color: blue;
 }
@@ -61,7 +61,7 @@ section .events .events-vert {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: .5em;
+  margin: 0em .5em;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -71,7 +71,7 @@ section .events .events-vert .event {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
-  margin-right: 1em;
+  margin-right: .3em;
 }
 
 section .events .events-vert .event .container-time-who {
@@ -88,20 +88,70 @@ section .events .events-vert .event .container-name {
 }
 
 section .events .events-vert .event .spacing {
-  color: gray;
+  color: #b1b1b1;
   font-size: 1.1em;
 }
 
 section .events .events-vert .extend-button {
   margin: 0em .5em;
+  cursor: pointer;
+}
+
+section .events .description {
+  display: none;
+  overflow: hidden;
+  background: darkgray;
+  border-radius: 0px 0px 20px 20px;
+}
+
+section .events .description .container {
+  margin: 0em .5em .5em .5em;
 }
 
 .arrow {
   border: solid black;
-  border-width: 0 3px 3px 0;
+  border-width: 0 2px 2px 0;
   display: inline-block;
-  padding: 3px;
+  padding: 4px;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+nav.mobile-menu {
+  display: block;
+}
+
+nav {
+  position: fixed;
+  z-index: 999;
+  width: 66%;
+  right: 0;
+  top: 0;
+  background: black;
+  height: 100vh;
+  padding: 1m;
+}
+
+nav ul.primary-nav {
+  margin-top: 5em;
+}
+
+nav li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: .5em;
+  font-size: 1.3em;
+  text-align: right;
+}
+
+nav li a:hover {
+  font-weight: bold;
+}
+
+.mobile-menu-exit {
+  float: right;
+  margin: .5em;
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */

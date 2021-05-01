@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Scenar</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="static/css/main.css">
 </head>
 <body>
     <div class="topbar">
         <div class="container">
-            <a class="logo" href="index.html">Tech<span>Scenar</span></a>
+            <a class="logo" href="index.html">Tech<span>Scénář</span></a>
 
-            <img id="mobile-open-menu" class="mobile-menu" src="images/menu.svg" alt="Open Navigation">
+            <img id="mobile-open-menu" class="mobile-menu" src="static/images/menu.svg" alt="Open Navigation">
 
             <nav>
-                <img id="mobile-close-menu" class="mobile-menu-exit" src="images/exit.svg" alt="Close Navigation">
+                <img id="mobile-close-menu" class="mobile-menu-exit" src="static/images/exit.svg" alt="Close Navigation">
                 <ul class="primary-nav">
                     <li class="current"><a href="#">Today</a></li>
                     <li><a href="#">Whole weekende</a></li>
@@ -29,23 +29,49 @@
         </div>
     </div>
     <section>
+        {% for key,value in data.items %}
         <div class="events">
             <div class="events-vert">
                 <div class="event">
                     <div class="container-name">
-                        <a href="#" class="name">Uklidit</a>
+                        <a href="#" class="name">{{value.name}}</a>
                     </div>
                     <div class="container-time-who">
-                        <a href="#" class="timerange">12:45-13:45</a>
+                        <a href="#" class="timerange">{{value.begin}} - {{value.end}}</a>
                         <a href="#" class="spacing">|</a>
-                        <a href="#" class="who">Jan Novak</a>
+                        <a href="#" class="who">{{value.organizer}}</a>
                     </div>
                 </div>
                 <div class="extend-button">
                     <p><i class="arrow"></i></p>
                 </div>
             </div>
+            <div class="description">
+                <div class="container">
+                    <div>{{value.location}}</div>
+                    <div>{{value.description}}</div>
+                </div>
+            </div>
         </div>
+        {% endfor %}
     </section>
+
+    <script>
+        var coll = document.getElementsByClassName("events-vert");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+        }
+    </script>
+
 </body>
 </html>

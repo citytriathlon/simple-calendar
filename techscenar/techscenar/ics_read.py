@@ -8,6 +8,9 @@ def get_next_item():
     for i in range(len(list(c.timeline))):
         e = list(c.timeline)[i]
         output[i] = {}
+        output[i]["begin"] = e.begin.format('DD-MM-YYYY')
+        output[i]["begin"] = e.begin.format('HH:mm')
+        output[i]["end"] = e.end.format('HH:mm')
         output[i]["name"] = e.name
         output[i]["description"] = e.description
         output[i]["location"] = e.location
