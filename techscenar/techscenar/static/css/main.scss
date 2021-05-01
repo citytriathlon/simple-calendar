@@ -13,12 +13,16 @@ body{
 .topbar {
     background: white;
     padding: 0.5em;
+    position: fixed;
+    top: 0px;
+    width: 100%;
 
-    .logo{
+    .logo {
         text-decoration: none;
         font-weight: bold;
         color: red;
         font-size: 1.2em;
+        flex: 3;
         span{
             color: var(--primary-color);
         }
@@ -27,10 +31,7 @@ body{
         display: none;
     }
     
-    .container {
-        display: flex;
-        place-content: space-between;
-    }
+
     .mobile-menu {
         cursor: pointer;
     }
@@ -41,6 +42,7 @@ a {
 }
 
 section {
+    margin-top: 45px;
     .events{
         margin: 0 .5em 1em .5em;
         background: white;
@@ -59,7 +61,7 @@ section {
                 }
                 .container-name{
                     text-align: center;
-                    font-size: 1.2em;
+                    font-size: 1.1em;
                     font-weight: bold;
                 }
                 .spacing{
@@ -79,6 +81,13 @@ section {
             border-radius: 0px 0px 20px 20px;
             .container{
                 margin: 0em .5em .5em .5em;
+                .key {
+                    font-size: 1.1em;
+                    font-weight: bold;
+                }
+                .value {
+                    color: rgb(34, 33, 33);
+                }
             }
         }
     }
@@ -93,8 +102,9 @@ section {
 }
 
 .date {
-    background-color: aquamarine;
+    // background-color: rgb(134, 209, 184);
     margin: 0;
+    padding-left: 0.5em;
 }
 
 // .active, .collapsible:hover {

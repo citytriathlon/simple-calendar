@@ -12,6 +12,9 @@ body {
 .topbar {
   background: white;
   padding: 0.5em;
+  position: fixed;
+  top: 0px;
+  width: 100%;
 }
 
 .topbar .logo {
@@ -19,6 +22,9 @@ body {
   font-weight: bold;
   color: red;
   font-size: 1.2em;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
 }
 
 .topbar .logo span {
@@ -29,13 +35,6 @@ body {
   display: none;
 }
 
-.topbar .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  place-content: space-between;
-}
-
 .topbar .mobile-menu {
   cursor: pointer;
 }
@@ -43,6 +42,10 @@ body {
 a {
   color: black;
   text-decoration: none;
+}
+
+section {
+  margin-top: 45px;
 }
 
 section .events {
@@ -79,7 +82,7 @@ section .events .events-vert .event .container-time-who {
 
 section .events .events-vert .event .container-name {
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-weight: bold;
 }
 
@@ -104,6 +107,15 @@ section .events .description .container {
   margin: 0em .5em .5em .5em;
 }
 
+section .events .description .container .key {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+section .events .description .container .value {
+  color: #222121;
+}
+
 .arrow {
   border: solid black;
   border-width: 0 2px 2px 0;
@@ -114,8 +126,8 @@ section .events .description .container {
 }
 
 .date {
-  background-color: aquamarine;
   margin: 0;
+  padding-left: 0.5em;
 }
 
 nav.mobile-menu {

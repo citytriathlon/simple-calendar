@@ -7,7 +7,7 @@ def camel_string(string):
 
 def get_names(description):
     names = []
-    for i in description.split(" "):
+    for i in description.split():
         if i.startswith("@"):
            name = i.lstrip("@")
            names.append(name)
@@ -26,23 +26,38 @@ def get_next_item():
     output = {}
     for i in range(len(list(c.timeline))):
         e = list(c.timeline)[i]
-        output[i] = {}
-        output[i]["begin"] = e.begin.format('DD-MM-YYYY')
-        output[i]["begin"] = e.begin.format('HH:mm')
-        output[i]["end"] = e.end.format('HH:mm')
-        output[i]["name"] = e.name
-        output[i]["description"] = e.description
-        output[i]["location"] = e.location
+        date = e.begin.format('DD. MM. YYYY')
+        day = int(e.begin.format('DD'))
+        if (day % 2) == 0:
+            random_hue = day * 10
+        else:
+            random_hue = 360 - (day * 10)
+        if date not in output:
+            output[date] = []
+        entry_dict = {}
+        if e.begin.format('HH:mm') == "00:00" and e.end.format('00:00'):
+            entry_dict["timerange"] = ""
+        else:
+            entry_dict["timerange"] = f'{e.begin.format("HH:mm")} - {e.end.format("HH:mm")}'
+        # entry_dict["begin"] = e.begin.format('HH:mm')
+        # entry_dict["end"] = e.end.format('HH:mm')
+        # entry_dict["timerange"] = e.end.format('HH:mm')
+        entry_dict["name"] = e.name
+        entry_dict["description"] = e.description
+        entry_dict["location"] = e.location
+        entry_dict["hue"] = random_hue
         names = get_names(e.description)
         if names:
-            output[i]["organizer"] = ", ".join(names)
+            entry_dict["organizer"] = ", ".join(names)
         elif "@citytriathlon.cz" in str(e.organizer).split(':')[-1]:
             email = str(e.organizer).split(':')[-1]
             name = " ".join(email.split('@')[0].split('.'))
-            output[i]["organizer"] = name_mod(name)
+            entry_dict["organizer"] = name_mod(name)
         else:
-            output[i]["organizer"] = str(e.organizer).split(':')[-1]
+            entry_dict["organizer"] = str(e.organizer).split(':')[-1]
+        output[date].append(entry_dict)
   
     return output
 
-# get_next_item()
+# output = get_next_item()
+# print(output)

@@ -11,7 +11,7 @@
 <body>
     <div class="topbar">
         <div class="container">
-            <a class="logo" href="index.html">Tech<span>Scénář</span></a>
+            <a class="logo" href="#">Tech<span>Scénář</span></a>
 
             <img id="mobile-open-menu" class="mobile-menu" src="static/images/menu.svg" alt="Open Navigation">
 
@@ -29,34 +29,49 @@
         </div>
     </div>
     <section>
-        <div class="date">
-            <div>28.6</div>
-            {% for key,value in data.items %}
+        {% for key,value in data.items %}
+        <div class="date" style="background:hsl({{value.0.hue}}, 100%, 91%);">
+            <div>{{key}}</div>
+            {% for i in value %}
             <div class="events">
                 <div class="events-vert">
                     <div class="event">
                         <div class="container-name">
-                            <a href="#" class="name">{{value.name}}</a>
+                            <div class="namename">{{i.name}}</div>
                         </div>
                         <div class="container-time-who">
-                            <a href="#" class="timerange">{{value.begin}} - {{value.end}}</a>
-                            <a href="#" class="spacing">|</a>
-                            <a href="#" class="who">{{value.organizer}}</a>
+                            <div class="timerange">{{i.timerange}}</div>
+                            <!-- <div class="spacing">|</div> -->
+                            <div class="who">{{i.organizer}}</div>
                         </div>
                     </div>
+                    {% if i.description or i.location %}
                     <div class="extend-button">
                         <p><i class="arrow"></i></p>
                     </div>
+                    {% endif %}
                 </div>
+                {% if i.description or i.location %}
                 <div class="description">
                     <div class="container">
-                        <div>{{value.location}}</div>
-                        <div>{{value.description}}</div>
+                        {% if i.location %}
+                            <div class="key">Lokace</div>
+                            <div class="value">{{i.location}}</div>
+                        {% endif %}
+                        {% if i.description and i.location %}
+                        <br>
+                        {% endif %}
+                        {% if i.description %}
+                            <div class="key">Popis</div>
+                            <div class="value">{{i.description|linebreaksbr}}</div>
+                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
+        {% endfor %}
     </section>
 
     <script>
