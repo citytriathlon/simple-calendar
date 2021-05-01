@@ -36,7 +36,7 @@ def get_next_item():
             output[date] = []
         entry_dict = {}
         if e.begin.format('HH:mm') == "00:00" and e.end.format('00:00'):
-            entry_dict["timerange"] = ""
+            entry_dict["timerange"] = "Celý den"
         else:
             entry_dict["timerange"] = f'{e.begin.format("HH:mm")} - {e.end.format("HH:mm")}'
         # entry_dict["begin"] = e.begin.format('HH:mm')

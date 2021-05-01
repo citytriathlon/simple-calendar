@@ -102,52 +102,52 @@ section {
 }
 
 .date {
-    // background-color: rgb(134, 209, 184);
     margin: 0;
     padding-left: 0.5em;
-}
-
-// .active, .collapsible:hover {
-//     background-color: #ccc;
-//   }
-
-
-nav.mobile-menu {
-    display: block;
-}
-
-nav {
-    position: fixed;
-    z-index: 999;
-    width: 66%;
-    right: 0;
-    top: 0;
-    background: black;
-    height: 100vh;
-    padding: 1m;
-
-    ul.primary-nav {
-        margin-top: 5em;
-    }
-
-    li {
-        a{
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: .5em;
-            font-size: 1.3em;
-            text-align: right;
-
-            &:hover {
-                font-weight: bold;
-            }
-        }
+    .date-text {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: rgb(48, 48, 48);
     }
 }
 
-.mobile-menu-exit {
-    float: right;
-    margin: .5em;
-    cursor: pointer;
-}
+
+// nav.mobile-menu {
+//     display: block;
+// }
+
+// nav {
+//     position: fixed;
+//     z-index: 999;
+//     width: 66%;
+//     right: 0;
+//     top: 0;
+//     background: black;
+//     height: 100vh;
+//     padding: 1m;
+
+//     ul.primary-nav {
+//         margin-top: 5em;
+//     }
+
+//     li {
+//         a{
+//             color: white;
+//             text-decoration: none;
+//             display: block;
+//             padding: .5em;
+//             font-size: 1.3em;
+//             text-align: right;
+
+//             &:hover {
+//                 font-weight: bold;
+//             }
+//         }
+//     }
+// }
+
+// .mobile-menu-exit {
+//     float: right;
+//     margin: .5em;
+//     cursor: pointer;
+// }

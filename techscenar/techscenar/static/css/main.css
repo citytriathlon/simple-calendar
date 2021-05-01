@@ -130,41 +130,9 @@ section .events .description .container .value {
   padding-left: 0.5em;
 }
 
-nav.mobile-menu {
-  display: block;
-}
-
-nav {
-  position: fixed;
-  z-index: 999;
-  width: 66%;
-  right: 0;
-  top: 0;
-  background: black;
-  height: 100vh;
-  padding: 1m;
-}
-
-nav ul.primary-nav {
-  margin-top: 5em;
-}
-
-nav li a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  padding: .5em;
-  font-size: 1.3em;
-  text-align: right;
-}
-
-nav li a:hover {
+.date .date-text {
+  font-size: 1.1em;
   font-weight: bold;
-}
-
-.mobile-menu-exit {
-  float: right;
-  margin: .5em;
-  cursor: pointer;
+  color: #303030;
 }
 /*# sourceMappingURL=main.css.map */
