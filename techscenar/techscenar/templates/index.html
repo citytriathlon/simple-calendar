@@ -11,7 +11,7 @@
 <body>
     <div class="topbar">
         <div class="container">
-            <a href="index.html"><span>Tech Scenar</span></a>
+            <a class="logo" href="index.html">Tech<span>Scenar</span></a>
 
             <img id="mobile-open-menu" class="mobile-menu" src="images/menu.svg" alt="Open Navigation">
 
@@ -19,7 +19,7 @@
                 <img id="mobile-close-menu" class="mobile-menu-exit" src="images/exit.svg" alt="Close Navigation">
                 <ul class="primary-nav">
                     <li class="current"><a href="#">Today</a></li>
-                    <li><a href="#">Whole weekend</a></li>
+                    <li><a href="#">Whole weekende</a></li>
                 </ul>
                 <ul class="secondary-nav">
                     <li><a href="#">help</a></li>
@@ -30,32 +30,22 @@
     </div>
     <section>
         <div class="events">
-            <div class="container">
+            <div class="events-vert">
+                <div class="event">
+                    <div class="container-name">
+                        <a href="#" class="name">Uklidit</a>
+                    </div>
+                    <div class="container-time-who">
+                        <a href="#" class="timerange">12:45-13:45</a>
+                        <a href="#" class="spacing">|</a>
+                        <a href="#" class="who">Jan Novak</a>
+                    </div>
+                </div>
+                <div class="extend-button">
+                    <p><i class="arrow"></i></p>
+                </div>
             </div>
         </div>
     </section>
-    <table>
-        <thead>
-            <tr>
-                <th colspan="4">EVENTS</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>name</td>
-                <td>description</td>
-                <td>location</td>
-                <td>organizer</td>
-            </tr>
-                {% for key,value in data.items %}
-                    <tr>
-                        <td>{{value.name}}</td>
-                        <td>{{value.description}}</td>
-                        <td>{{value.location}}</td>
-                        <td>{{value.organizer}}</td>
-                    </tr>
-                {% endfor %}
-        </tbody>
-    </table>
 </body>
 </html>
