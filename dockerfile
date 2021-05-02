@@ -1,8 +1,8 @@
-FROM python:3.9
+FROM python:3-buster
 
 EXPOSE 8000
 
-# WORKDIR /
+WORKDIR /
 
 COPY . .
 
@@ -10,4 +10,4 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install -r requirments.txt
 
-CMD ["python3 techscenar/manage.py run techscenar"]
+CMD ["python", "./techscenar/manage.py", "run", "techscenar"]
