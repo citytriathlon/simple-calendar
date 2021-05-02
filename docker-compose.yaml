@@ -26,9 +26,10 @@ services:
     volumes:
       - ./nginx/:/etc/nginx/conf.d
       - letsencrypt:/etc/letsencrypt
-    ports:
-      - "80:80"
-      - "443:443"
+    network_mode: host
+    # ports:
+    #   - "80:80"
+    #   - "443:443"
 
 volumes: 
     letsencrypt:
