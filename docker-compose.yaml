@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: techscenar
+    build:
+      dockerfile: Dockerfile
+    expose:
+      - 0:0:0:0:8000:8000
