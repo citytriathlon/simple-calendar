@@ -12,22 +12,22 @@ services:
     volumes: 
         - .:/t
     command: python /t/techscenar/manage.py runserver 0.0.0.0:8000
-  nginx:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: dockerfile.nginx
-      network: host
-      args:
-        - CERTBOT_EMAIL=jan.novak@outlook.com
-        - DOMAIN_LIST=tech.inovak.net
-    restart: always
-    volumes:
-      - ./nginx/:/etc/nginx/conf.d
-      - letsencrypt:/etc/letsencrypt
-    ports:
-      - "80:80"
-      - "443:443"
+#   nginx:
+#     container_name: nginx
+#     build:
+#       context: .
+#       dockerfile: dockerfile.nginx
+#       network: host
+#       args:
+#         - CERTBOT_EMAIL=jan.novak@outlook.com
+#         - DOMAIN_LIST=tech.inovak.net
+#     restart: always
+#     volumes:
+#       - ./nginx/:/etc/nginx/conf.d
+#       - letsencrypt:/etc/letsencrypt
+#     ports:
+#       - "80:80"
+#       - "443:443"
 
-volumes: 
-    letsencrypt:
+# volumes: 
+#     letsencrypt:
