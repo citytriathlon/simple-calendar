@@ -9,6 +9,7 @@ services:
       dockerfile: dockerfile.tech
     ports:
       - "0.0.0.0:8000:8000"
+    network: host
     volumes: 
         - .:/t
     command: python /t/techscenar/manage.py runserver 0.0.0.0:8000
