@@ -1,4 +1,4 @@
-<!-- https://youtu.be/D-h8L5hgW-w?t=6338 -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Scenar</title>
-    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
     <div class="topbar">
         <div class="container">
             <a class="logo" href="#">Tech<span>Scénář</span></a>
 
-            <img id="mobile-open-menu" class="mobile-menu" src="static/images/menu.svg" alt="Open Navigation">
+            <img id="mobile-open-menu" class="mobile-menu" src="{% static 'images/menu.svg' %}" alt="Open Navigation">
 
             <nav>
-                <img id="mobile-close-menu" class="mobile-menu-exit" src="static/images/exit.svg" alt="Close Navigation">
+                <img id="mobile-close-menu" class="mobile-menu-exit" src="{% static 'images/exit.svg' %}" alt="Close Navigation">
                 <ul class="primary-nav">
                     <li class="current"><a href="#">Today</a></li>
                     <li><a href="#">Whole weekende</a></li>
