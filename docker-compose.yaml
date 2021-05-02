@@ -18,7 +18,7 @@ services:
       network: host
       args:
         - CERTBOT_EMAIL=jan.novak@outlook.com
-        - DOMAIN_LIST=tech.inovak.net,www.tech.inovak.net
+        - DOMAIN_LIST=tech.inovak.net
     restart: always
     volumes:
       - ./nginx/:/etc/nginx/conf.d
