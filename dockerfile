@@ -10,4 +10,4 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install -r requirments.txt
 
-CMD ["python", "./techscenar/manage.py", "run", "techscenar"]
+CMD ["python", "./techscenar/manage.py", "runserver"]
