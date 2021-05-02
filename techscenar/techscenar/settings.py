@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     '10.180.0.48',
 ]
 
+ADMIN_ENABLED = False
 
 # Application definition
 
