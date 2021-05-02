@@ -11,8 +11,8 @@ services:
     ports:
       - "0.0.0.0:8000:8000"
     volumes: 
-        - .:/t
-    command: bash -c "python /t/techscenar/manage.py collectstatic && python /t/techscenar/manage.py runserver 0.0.0.0:8000"
+        - techscenar:/t
+    command: bash -c "python /t/manage.py collectstatic && python /t/manage.py runserver 0.0.0.0:8000"
   nginx:
     container_name: nginx
     build:
