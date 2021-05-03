@@ -16,25 +16,24 @@ body{
     position: fixed;
     top: 0px;
     width: 100%;
+    
 
     .logo {
         text-decoration: none;
         font-weight: bold;
         color: red;
         font-size: 1.2em;
-        flex: 3;
         span{
             color: var(--primary-color);
         }
     }
-    nav {
-        display: none;
-    }
-    
-
-    .mobile-menu {
-        cursor: pointer;
-    }
+    .input_box {
+        width: 60%; /* Full-width */
+        font-size: 1em; /* Increase font-size */
+        padding: 5px 20px 5px 40px; /* Add some padding */
+        border: 1px solid #ddd; /* Add a grey border */
+        // margin-bottom: 12px; /* Add some space below the input */
+      }
 }
 a {
     color: black;
@@ -111,6 +110,19 @@ section {
     }
 }
 
+.ulul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.searchstring {
+    display: none;
+}
+
+.searchstring_date {
+    display: none;
+}
 
 // nav.mobile-menu {
 //     display: block;
