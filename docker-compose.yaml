@@ -7,7 +7,6 @@ services:
     build:
       context: .
       dockerfile: dockerfile.tech
-      network: host
     ports:
       - "0.0.0.0:8000:8000"
     command: bash -c "python techscenar/manage.py collectstatic && python techscenar/manage.py runserver 0.0.0.0:8000"
@@ -25,9 +24,6 @@ services:
       - ./nginx/:/etc/nginx/conf.d
       - letsencrypt:/etc/letsencrypt
     network_mode: host
-    # ports:
-    #   - "80:80"
-    #   - "443:443"
 
 volumes: 
     letsencrypt:
