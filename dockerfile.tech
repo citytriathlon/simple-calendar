@@ -4,7 +4,7 @@ EXPOSE 8000
 
 WORKDIR /
 
-COPY requirments.txt .
+COPY . .
 
 RUN pip3 install --upgrade pip
 
