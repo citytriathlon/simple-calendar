@@ -2,3 +2,4 @@ env/*
 techscenar/techscenar/__pycache__/*
 *.pyc
 .DS_Store
+techscenar/staticfiles/
