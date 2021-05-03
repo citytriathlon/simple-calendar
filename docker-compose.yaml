@@ -9,7 +9,7 @@ services:
       dockerfile: dockerfile.tech
     ports:
       - "0.0.0.0:8000:8000"
-    command: bash -c "python techscenar/manage.py collectstatic && python techscenar/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python techscenar/manage.py collectstatic --noinput && python techscenar/manage.py runserver 0.0.0.0:8000"
   nginx:
     container_name: nginx
     build:
