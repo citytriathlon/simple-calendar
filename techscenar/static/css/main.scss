@@ -30,7 +30,7 @@ body{
     .input_box {
         width:40%; /* Full-width */
         font-size: 1em; /* Increase font-size */
-        padding: 5px 20px 5px 40px; /* Add some padding */
+        padding: .2em .3em .2em 3em; /* Add some padding */
         border: 1px solid #ddd; /* Add a grey border */
         // margin-bottom: 12px; /* Add some space below the input */
       }
@@ -41,7 +41,7 @@ a {
 }
 
 section {
-    margin-top: 45px;
+    margin-top: 3.2em;
     .events{
         margin: 0 .5em 1em .5em;
         background: white;

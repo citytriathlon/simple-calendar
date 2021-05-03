@@ -33,7 +33,7 @@ body {
   /* Full-width */
   font-size: 1em;
   /* Increase font-size */
-  padding: 5px 20px 5px 40px;
+  padding: .2em .3em .2em 3em;
   /* Add some padding */
   border: 1px solid #ddd;
   /* Add a grey border */
@@ -45,7 +45,7 @@ a {
 }
 
 section {
-  margin-top: 45px;
+  margin-top: 3.2em;
 }
 
 section .events {
