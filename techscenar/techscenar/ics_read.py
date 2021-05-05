@@ -1,22 +1,23 @@
 from ics import Calendar
 import requests
+import re
 
-def camel_string(string):
-    string = string.capitalize()
-    return string
 
 def get_names(description):
-    names = []
-    for i in description.split():
-        if i.startswith("@"):
-           name = i.lstrip("@")
-           names.append(name)
+    names = re.findall(r'@([\w]*)',description)
     return names
+
 
 def name_mod(name_in):
     name_out_list = []
+    z = 0
     for i in name_in.split(" "):
-        name_out_list.append(i.capitalize())
+        if z == 0:
+            name_out_list.append(i.capitalize())
+            z += 1
+        else:
+            fam_name_short = f'{list(i)[0]}.'
+            name_out_list.append(fam_name_short.capitalize())
     name_out = " ".join(name_out_list)
     return name_out
 
@@ -39,16 +40,13 @@ def get_next_item():
             entry_dict["timerange"] = "Celý den"
         else:
             entry_dict["timerange"] = f'{e.begin.format("HH:mm")} - {e.end.format("HH:mm")}'
-        # entry_dict["begin"] = e.begin.format('HH:mm')
-        # entry_dict["end"] = e.end.format('HH:mm')
-        # entry_dict["timerange"] = e.end.format('HH:mm')
         entry_dict["name"] = e.name
         entry_dict["description"] = e.description
         entry_dict["location"] = e.location
         entry_dict["hue"] = random_hue
         names = get_names(e.description)
         if names:
-            entry_dict["organizer"] = ", ".join(names)
+            entry_dict["organizer"] = ", ".join([x.capitalize() for x in names])
         elif "@citytriathlon.cz" in str(e.organizer).split(':')[-1]:
             email = str(e.organizer).split(':')[-1]
             name = " ".join(email.split('@')[0].split('.'))
@@ -65,5 +63,5 @@ def get_next_item():
   
     return output
 
-# output = get_next_item()
-# print(output)
+output = get_next_item()
+print(output)

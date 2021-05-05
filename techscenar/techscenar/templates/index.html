@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Scenar</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
 </head>
 
 <body>
@@ -58,7 +59,9 @@
                                         {% endif %}
                                         {% if i.description %}
                                         <a class="key">Popis</a><br>
-                                        <a class="value">{{i.description|linebreaksbr}}</a>
+                                        {% autoescape off %}
+                                        <div class="value">{{i.description|linebreaks}}</div>
+                                        {% endautoescape %}
                                         {% endif %}
                                     </div>
                                 </div>
