@@ -63,5 +63,5 @@ def get_next_item():
   
     return output
 
-output = get_next_item()
-print(output)
+# output = get_next_item()
+# print(output)
