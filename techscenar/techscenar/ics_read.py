@@ -36,10 +36,10 @@ def get_next_item():
         if date not in output:
             output[date] = []
         entry_dict = {}
-        if e.begin.format('HH:mm') == "00:00" and e.end.format('00:00'):
-            entry_dict["timerange"] = "Celý den"
-        else:
-            entry_dict["timerange"] = f'{e.begin.format("HH:mm")} - {e.end.format("HH:mm")}'
+        entry_dict["begin"] = e.begin.to('local').format("HH:mm")
+        entry_dict["end"] = e.end.to('local').format("HH:mm")
+        entry_dict["end_epoch"] = e.end.to('local').timestamp * 1000
+        entry_dict["begin_epoch"] = e.begin.to('local').timestamp * 1000
         entry_dict["name"] = e.name
         entry_dict["description"] = e.description
         entry_dict["location"] = e.location
@@ -53,7 +53,7 @@ def get_next_item():
             entry_dict["organizer"] = name_mod(name)
         else:
             entry_dict["organizer"] = str(e.organizer).split(':')[-1]
-        all_strings = [e.name,e.description,e.location,entry_dict["organizer"],entry_dict["timerange"],date]
+        all_strings = [e.name,e.description,e.location,entry_dict["organizer"],entry_dict["begin"],entry_dict["end"],date]
         entry_dict["all_strings"] = " ".join(all_strings)
         output[date].append(entry_dict)
         if "all_strings_date" in output[date][0]:

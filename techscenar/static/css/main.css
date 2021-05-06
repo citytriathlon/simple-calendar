@@ -43,7 +43,7 @@ section {
   margin-top: 3.2em;
 }
 
-section .events {
+section .events .event_li {
   margin: 0 .5em 1em .5em;
   background: white;
   border-radius: 5px 20px 20px 20px;
@@ -142,6 +142,14 @@ section .events .description .container .value {
 }
 
 .searchstring_date {
+  display: none;
+}
+
+.end_epoch {
+  display: none;
+}
+
+.begin_epoch {
   display: none;
 }
 /*# sourceMappingURL=main.css.map */
