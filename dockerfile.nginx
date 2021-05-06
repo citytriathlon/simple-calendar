@@ -3,7 +3,7 @@ ARG CERTBOT_EMAIL
 ARG DOMAIN
 ARG FORWARD_HOST
 WORKDIR /
-COPY nginx/nginx.conf /etc/nginx/conf.d/.
+COPY nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 RUN  apt-get update \
       && apt-get install -y cron certbot python-certbot-nginx bash wget \
       && sed -i'.bak' -e 's/domain.domain/${DOMAIN}/g' /etc/nginx/conf.d/nginx.conf \
