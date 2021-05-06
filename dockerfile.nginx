@@ -1,11 +1,16 @@
 FROM nginx:stable
 ARG CERTBOT_EMAIL
-ARG DOMAIN_LIST
+ARG DOMAIN
+WORKDIR /
+COPY nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 RUN  apt-get update \
       && apt-get install -y cron certbot python-certbot-nginx bash wget \
-      && certbot certonly --standalone --agree-tos -m "${CERTBOT_EMAIL}" -n -d ${DOMAIN_LIST} \
+      && sed -i".bak" -e "s/domain.domain/${DOMAIN}/g" /etc/nginx/conf.d/nginx.conf \
+      && cat /etc/nginx/conf.d/nginx.conf \
+      && certbot certonly --standalone --agree-tos -m "${CERTBOT_EMAIL}" -n -d ${DOMAIN} \
       && rm -rf /var/lib/apt/lists/* \
       && echo "@monthly certbot renew --nginx >> /var/log/cron.log 2>&1" >/etc/cron.d/certbot-renew \
-      && crontab /etc/cron.d/certbot-renew
+      && crontab /etc/cron.d/certbot-renew \
+      && cat /etc/nginx/conf.d/nginx.conf
 VOLUME /etc/letsencrypt
 CMD [ "sh", "-c", "cron && nginx -g 'daemon off;'" ]
