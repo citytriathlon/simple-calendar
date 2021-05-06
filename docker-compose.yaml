@@ -19,7 +19,6 @@ services:
       args:
         - CERTBOT_EMAIL=jan.novak@outlook.com
         - DOMAIN=tech.inovak.net
-        - FORWARD_HOST="http://localhost:8000"
     restart: always
     volumes:
       # - ./nginx/:/etc/nginx/conf.d
