@@ -8,14 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Scenar</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
 </head>
 
-<body>
+<body onload="startTime()">
     <div class="topbar">
         <div class="container">
             <a class="logo" href="#">Tech<span>Scénář</span></a>
-            <input type="text" id="myInput" class="input_box" onkeyup="myFunction();myFunction2()" placeholder="Search..">
+            <input type="text" id="myInput" class="input_box" onkeyup="myFunction();myFunction2()"
+                placeholder="Search..">
         </div>
     </div>
     <section>
@@ -34,10 +35,12 @@
                                             <a class="namename">{{i.name}}</a>
                                         </div>
                                         <div class="container-time-who">
-                                            <a class="timerange">{{i.timerange}}</a>
+                                            <a class="timerange">{{i.begin}} - {{i.end}}</a>
                                             <a class="who">{{i.organizer}}</a>
                                             <div class="searchstring">{{i.all_strings}}</div>
                                             <div class="searchstring_date">{{i.all_strings_date}}</div>
+                                            <div class="begin_epoch">{{i.begin_epoch}}</div>
+                                            <div class="end_epoch">{{i.end_epoch}}</div>
                                         </div>
                                     </div>
                                     {% if i.description or i.location %}
@@ -60,7 +63,7 @@
                                         {% if i.description %}
                                         <a class="key">Popis</a><br>
                                         {% autoescape off %}
-                                        <div class="value">{{i.description|linebreaks}}</div>
+                                        <div class="value">{{i.description}}</div>
                                         {% endautoescape %}
                                         {% endif %}
                                     </div>
@@ -76,58 +79,7 @@
         </ul>
     </section>
 
-    <script>
-        var coll = document.getElementsByClassName("events-vert");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-
-        function myFunction() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById('myInput');
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("myUL");
-            li = ul.getElementsByClassName('event_li');
-
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByClassName("searchstring")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
-                }
-            }
-        }
-
-        function myFunction2() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById('myInput');
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("myUL");
-            li = ul.getElementsByClassName('date_li');
-
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByClassName("searchstring_date")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
-                }
-            }
-        }
-    </script>
+    <script src="{% static 'scripts/myscripts.js' %}"></script>
 
 </body>
 
