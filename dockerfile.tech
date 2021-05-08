@@ -1,5 +1,7 @@
 FROM python:3-buster
 
+ARG ICS_URL
+
 EXPOSE 8000
 
 WORKDIR /
@@ -7,6 +9,8 @@ WORKDIR /
 COPY . .
 
 RUN rm -rf /techscenar/staticfiles
+
+RUN export ICS_URL=${ICS_URL}
 
 RUN pip3 install --upgrade pip
 

@@ -7,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: dockerfile.tech
+      args:
+        - ICS_URL="https://calendar.google.com/calendar/ical/c_6lojl9vcji7jf4i5epk10b70f0%40group.calendar.google.com/private-5f248df38c67864be13c6704c932a764/basic.ics"
     ports:
       - "0.0.0.0:8000:8000"
     command: bash -c "python techscenar/manage.py collectstatic --noinput && python techscenar/manage.py runserver 0.0.0.0:8000"
@@ -21,7 +23,6 @@ services:
         - DOMAIN=tech.inovak.net
     restart: always
     volumes:
-      # - ./nginx/:/etc/nginx/conf.d
       - letsencrypt:/etc/letsencrypt
     network_mode: host
 
