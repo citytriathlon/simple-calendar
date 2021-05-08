@@ -4,7 +4,7 @@ import re
 
 
 def get_names(description):
-    names = re.findall(r'@([\w]*)',description)
+    names = re.findall(r'@(\w*)(?!\.)(?![a-z]{1,3})',description)
     return names
 
 
