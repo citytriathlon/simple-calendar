@@ -10,4 +10,4 @@ RUN rm -rf /techscenar/staticfiles
 
 RUN pip3 install --upgrade pip --root-user-action=ignore
 
-RUN pip3 install -r requirments.txt
+RUN pip3 install -r requirments.txt --root-user-action=ignore
