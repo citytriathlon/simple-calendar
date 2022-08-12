@@ -4,7 +4,7 @@ ARG DOMAIN
 WORKDIR /
 COPY nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 RUN  apt-get update \
-      && apt-get install -y cron certbot python-certbot-nginx bash wget \
+      && apt-get install -y cron certbot python3-certbot-nginx bash wget \
       && sed -i".bak" -e "s/domain.domain/${DOMAIN}/g" /etc/nginx/conf.d/nginx.conf \
       && cat /etc/nginx/conf.d/nginx.conf \
       && certbot certonly --standalone --agree-tos -m "${CERTBOT_EMAIL}" -n -d ${DOMAIN} \

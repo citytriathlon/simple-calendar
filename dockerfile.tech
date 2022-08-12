@@ -8,8 +8,6 @@ COPY . .
 
 RUN rm -rf /techscenar/staticfiles
 
-RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade pip --root-user-action=ignore
 
 RUN pip3 install -r requirments.txt
-
-# CMD ["python", "./techscenar/manage.py", "runserver", "0.0.0.0:8000"]
