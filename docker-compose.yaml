@@ -20,8 +20,8 @@ services:
       dockerfile: dockerfile.nginx
       network: host
       args:
-        - CERTBOT_EMAIL=jan.novak@outlook.com
-        - DOMAIN=tech.inovak.net
+        - CERTBOT_EMAIL=jan.novak@citytriathlon.cz
+        - DOMAIN=tech.citytriathlon.cz
     restart: always
     volumes:
       - letsencrypt:/etc/letsencrypt

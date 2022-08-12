@@ -24,7 +24,6 @@ def name_mod(name_in):
 
 def get_next_item():
     url = os.environ['ICS_URL']
-    # url = "https://calendar.google.com/calendar/ical/c_6lojl9vcji7jf4i5epk10b70f0%40group.calendar.google.com/private-5f248df38c67864be13c6704c932a764/basic.ics"
     c = Calendar(requests.get(url).text)
     output = {}
     for i in range(len(list(c.timeline))):
@@ -40,8 +39,8 @@ def get_next_item():
         entry_dict = {}
         entry_dict["begin"] = e.begin.to('local').format("HH:mm")
         entry_dict["end"] = e.end.to('local').format("HH:mm")
-        entry_dict["end_epoch"] = e.end.to('local').timestamp * 1000
-        entry_dict["begin_epoch"] = e.begin.to('local').timestamp * 1000
+        entry_dict["end_epoch"] = e.end.to('local').timestamp
+        entry_dict["begin_epoch"] = e.begin.to('local').timestamp
         entry_dict["name"] = e.name
         entry_dict["description"] = e.description
         entry_dict["location"] = e.location
@@ -64,6 +63,3 @@ def get_next_item():
             output[date][0]["all_strings_date"] = entry_dict["all_strings"]
   
     return output
-
-# output = get_next_item()
-# print(output)
