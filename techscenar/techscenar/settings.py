@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@lh2bacj=hs5v$%j+ybh#9!zqzv3unjl#f%4lj-9e5$-_fd56h'
+SECRET_KEY = 'ctt&j679sbf*twxrz8^q+9mtczao1xsqzob-+xyu=$p)3r!loi)v=2022'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '.citytriathlon.cz',
