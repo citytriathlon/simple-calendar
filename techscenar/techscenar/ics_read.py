@@ -39,8 +39,10 @@ def get_next_item():
         entry_dict = {}
         entry_dict["begin"] = e.begin.to('local').format("HH:mm")
         entry_dict["end"] = e.end.to('local').format("HH:mm")
-        entry_dict["end_epoch"] = e.end.to('local').timestamp
-        entry_dict["begin_epoch"] = e.begin.to('local').timestamp
+        end_epoch = e.end.to('local').timestamp
+        entry_dict["end_epoch"] = end_epoch * 1000
+        begin_epoch = e.begin.to('local').timestamp
+        entry_dict["begin_epoch"] = begin_epoch * 1000
         entry_dict["name"] = e.name
         entry_dict["description"] = e.description
         entry_dict["location"] = e.location
