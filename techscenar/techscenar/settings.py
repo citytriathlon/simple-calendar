@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@lh2bacj=hs5v$%j+ybh#9!zqzv3unjl#f%4lj-9e5$-_fd56h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '.citytriathlon.cz',
