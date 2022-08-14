@@ -6,7 +6,7 @@
 body {
   background: #f0efef;
   margin: 0;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 .topbar {
@@ -14,105 +14,77 @@ body {
   padding: 0.5em;
   position: fixed;
   top: 0px;
-  width: 95%;
+  width: 100%;
   z-index: 10;
   white-space: nowrap;
-  -webkit-box-shadow: 1px 1px 3px var(--primary-color);
-          box-shadow: 1px 1px 3px var(--primary-color);
+  box-shadow: 1px 1px 1px var(--primary-color);
 }
-
 .topbar .logo {
   text-decoration: none;
   font-weight: bold;
   color: red;
   font-size: 1.2em;
 }
-
 .topbar .logo span {
   color: var(--primary-color);
 }
-
 .topbar .input_box {
-  width: 60%;
-  /* Full-width */
-  font-size: 1em;
-  /* Increase font-size */
-  padding: .2em .3em .2em 3em;
-  /* Add some padding */
-  border: 1px solid #ddd;
-  /* Add a grey border */
+  width: 60%; /* Full-width */
+  font-size: 1em; /* Increase font-size */
+  padding: 0.2em 0.3em 0.2em 3em; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
 }
 
 section {
   margin-top: 3.2em;
 }
-
 section .events .event_li {
-  margin: 0 .5em 1em .5em;
+  margin: 0 0.5em 1em 0.5em;
   background: white;
   border-radius: 5px 20px 20px 20px;
-  -webkit-box-shadow: 1px 1px 3px var(--primary-color);
-          box-shadow: 1px 1px 3px var(--primary-color);
+  box-shadow: 1px 1px 3px var(--primary-color);
 }
-
 section .events .events-vert {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  margin: 0em .5em;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  margin: 0em 0.5em;
+  align-items: center;
 }
-
 section .events .events-vert .event {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
-  margin-right: .3em;
+  flex: 3;
+  margin-right: 0.3em;
 }
-
 section .events .events-vert .event .container-time-who {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   place-content: space-between;
 }
-
 section .events .events-vert .event .container-name {
   text-align: center;
   font-size: 1.1em;
   font-weight: bold;
 }
-
 section .events .events-vert .event .spacing {
-  color: #b1b1b1;
+  color: rgb(177, 177, 177);
   font-size: 1.1em;
 }
-
 section .events .events-vert .extend-button {
-  margin: 0em .5em;
+  margin: 0em 0.5em;
   cursor: pointer;
 }
-
 section .events .description {
   display: none;
   overflow: hidden;
-  background: #cfcfcf;
+  background: rgb(207, 207, 207);
   border-radius: 0px 0px 20px 20px;
 }
-
 section .events .description .container {
-  margin: 0em .5em .5em .5em;
+  margin: 0em 0.5em 0.5em 0.5em;
 }
-
 section .events .description .container .key {
   font-size: 1.1em;
   font-weight: bold;
 }
-
 section .events .description .container .value {
-  color: #222121;
+  color: rgb(34, 33, 33);
 }
 
 .arrow {
@@ -128,11 +100,10 @@ section .events .description .container .value {
   margin: 0;
   padding-left: 0.5em;
 }
-
 .date .date-text {
   font-size: 1.1em;
   font-weight: bold;
-  color: #303030;
+  color: rgb(48, 48, 48);
 }
 
 .ulul {
@@ -155,5 +126,4 @@ section .events .description .container .value {
 
 .begin_epoch {
   display: none;
-}
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

@@ -16,6 +16,9 @@ body{
     position: fixed;
     top: 0px;
     width: 100%;
+    z-index: 10;
+    white-space: nowrap;
+    box-shadow: 1px 1px 1px var(--primary-color);
     
 
     .logo {
@@ -28,7 +31,7 @@ body{
         }
     }
     .input_box {
-        width:40%; /* Full-width */
+        width:60%; /* Full-width */
         font-size: 1em; /* Increase font-size */
         padding: .2em .3em .2em 3em; /* Add some padding */
         border: 1px solid #ddd; /* Add a grey border */
