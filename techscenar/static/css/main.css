@@ -14,7 +14,11 @@ body {
   padding: 0.5em;
   position: fixed;
   top: 0px;
-  width: 100%;
+  width: 95%;
+  z-index: 10;
+  white-space: nowrap;
+  -webkit-box-shadow: 1px 1px 3px var(--primary-color);
+          box-shadow: 1px 1px 3px var(--primary-color);
 }
 
 .topbar .logo {
@@ -29,7 +33,7 @@ body {
 }
 
 .topbar .input_box {
-  width: 40%;
+  width: 60%;
   /* Full-width */
   font-size: 1em;
   /* Increase font-size */
