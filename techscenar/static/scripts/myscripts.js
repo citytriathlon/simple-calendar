@@ -25,6 +25,8 @@ function startTime() {
         b = li[i].getElementsByClassName("end_epoch")[0].innerText;
         if (b > t && t > a) {
             li[i].style.backgroundColor = "lightblue";
+        } else if ( t > b) {
+            li[i].style.backgroundColor = "lightgray";
         } else {
             li[i].style.backgroundColor = "";
         }
