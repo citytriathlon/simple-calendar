@@ -55,7 +55,7 @@ def get_next_item():
         else:
             entry_dict["organizer"] = str(e.organizer).split(':')[-1]
         all_strings = [e.name,e.description,e.location,entry_dict["organizer"],entry_dict["begin"],entry_dict["end"],date]
-        entry_dict["all_strings"] = " ".join(all_strings)
+        entry_dict["all_strings"] = " ".join([str(item) for item in all_strings])
         output[date].append(entry_dict)
         if "all_strings_date" in output[date][0]:
             output[date][0]["all_strings_date"] = f'{output[date][0]["all_strings_date"]} {entry_dict["all_strings"]}'
