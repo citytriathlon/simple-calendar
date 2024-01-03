@@ -1,31 +1,9 @@
-version: '3.7'
-
 services:
   web:
-    container_name: techscenar
+    container_name: simple-calendar
     restart: always
     build:
       context: .
       dockerfile: dockerfile.tech
     ports:
       - "0.0.0.0:8000:8000"
-    command: >
-      bash -c "export ICS_URL="https://calendar.google.com/calendar/ical/c_6lojl9vcji7jf4i5epk10b70f0%40group.calendar.google.com/private-5f248df38c67864be13c6704c932a764/basic.ics"
-      && python techscenar/manage.py collectstatic --noinput
-      && python techscenar/manage.py runserver 0.0.0.0:8000"
-  nginx:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: dockerfile.nginx
-      network: host
-      args:
-        - CERTBOT_EMAIL=jan.novak@citytriathlon.cz
-        - DOMAIN=tech.citytriathlon.cz
-    restart: always
-    volumes:
-      - letsencrypt:/etc/letsencrypt
-    network_mode: host
-
-volumes: 
-    letsencrypt:
