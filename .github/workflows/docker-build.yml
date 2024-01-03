@@ -14,7 +14,17 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: write-all
+    strategy:
+      matrix:
+        dockerfile:
+          - name: "en"
+            path: "Dockerfile.en"
+          - name: "ctt"
+            path: "Dockerfile.ctt"
+    permissions:
+      contents: write
+      packages: write
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -29,24 +39,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push the Simple-Calendar docker EN image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile.en
+          file: ${{ matrix.dockerfile.path }}
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/citytriathlon/simple-calendar:${{ github.run_number }}
-            ghcr.io/citytriathlon/simple-calendar:latest
-
-      - name: Build and push the Simple-Calendar docker CTT image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile.ctt
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/citytriathlon/simple-calendar:${{ github.run_number }}-ctt
-            ghcr.io/citytriathlon/simple-calendar:latest-ctt
+            ghcr.io/citytriathlon/simple-calendar:${{ github.run_number }}-${{ matrix.dockerfile.name }}
+            ghcr.io/citytriathlon/simple-calendar:latest-${{ matrix.dockerfile.name }}
