@@ -1,0 +1,5 @@
+flask==3.0.0
+ics==0.7.2
+aiohttp==3.9.1
+pytz
+requests
