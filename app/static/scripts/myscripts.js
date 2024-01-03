@@ -14,29 +14,38 @@ for (i = 0; i < coll.length; i++) {
 }
 
 function startTime() {
-    var today, r, t, li, a, b, ul, currentEventFound = false;
+    var today, r, t, li, a, b, ul, currentEventFound = false, nextEventElement = null;
     today = new Date();
     t = today.getTime();
     ul = document.getElementById("myUL");
     li = ul.getElementsByClassName('event_li');
 
     for (var i = 0; i < li.length; i++) {
-        a = li[i].getElementsByClassName("begin_epoch")[0].innerText;
-        b = li[i].getElementsByClassName("end_epoch")[0].innerText;
+        a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
+        b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
+
         if (b > t && t > a) {
             li[i].style.backgroundColor = "lightblue";
             if (!currentEventFound) {
                 li[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
                 currentEventFound = true;
             }
-        } else if (t > b) {
-            li[i].style.backgroundColor = "lightgray";
         } else {
-            li[i].style.backgroundColor = "";
+            li[i].style.backgroundColor = (t > b) ? "lightgray" : "";
+            
+            if (a > t && !nextEventElement) {
+                nextEventElement = li[i];
+            }
         }
     }
+
+    if (!currentEventFound && nextEventElement) {
+        nextEventElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     r = setTimeout(startTime, 10000);
 }
+
 
 
 function myFunction() {
