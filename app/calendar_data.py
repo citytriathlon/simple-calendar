@@ -6,11 +6,15 @@ from ics import Calendar
 from datetime import datetime, timedelta
 import re
 
+
 class CalendarData:
     def __init__(self, update_interval=30):
         self.data = {}
         self.update_interval = update_interval
-        self.url = os.environ.get('ICS_URL', 'https://www.google.com/calendar/ical/en.usa%23holiday@group.v.calendar.google.com/public/basic.ics')
+        self.url = os.environ.get(
+            "ICS_URL",
+            "https://www.google.com/calendar/ical/en.usa%23holiday@group.v.calendar.google.com/public/basic.ics",
+        )
 
     async def start(self):
         await self.update_data()
@@ -34,7 +38,7 @@ class CalendarData:
         for event in calendar.timeline:
             event_date = event.begin.datetime.replace(tzinfo=None)
             if event_date > one_day_ago:
-                date_str = event_date.strftime('%d. %m. %Y')
+                date_str = event_date.strftime("%d. %m. %Y")
                 entry_dict = self.process_event(event)
                 output.setdefault(date_str, []).append(entry_dict)
         return output
@@ -59,13 +63,13 @@ class CalendarData:
         }
 
         all_strings = [
-            str(entry_dict["name"]), 
-            str(entry_dict["description"]), 
-            str(entry_dict["location"]), 
-            str(organizer), 
-            str(entry_dict["begin"]), 
-            str(entry_dict["end"]), 
-            event.begin.format('DD. MM. YYYY')
+            str(entry_dict["name"]),
+            str(entry_dict["description"]),
+            str(entry_dict["location"]),
+            str(organizer),
+            str(entry_dict["begin"]),
+            str(entry_dict["end"]),
+            event.begin.format("DD. MM. YYYY"),
         ]
         entry_dict["all_strings"] = " ".join(all_strings)
         entry_dict["all_strings_date"] = entry_dict["all_strings"]
@@ -80,17 +84,21 @@ class CalendarData:
             return ", ".join(names)
 
         # Fallback to existing logic
-        if "@citytriathlon.cz" in str(organizer).split(':')[-1]:
-            email = str(organizer).split(':')[-1]
-            name = " ".join(email.split('@')[0].split('.'))
+        if "@citytriathlon.cz" in str(organizer).split(":")[-1]:
+            email = str(organizer).split(":")[-1]
+            name = " ".join(email.split("@")[0].split("."))
             return CalendarData.name_mod(name)
         else:
-            return str(organizer).split(':')[-1] if organizer else "Unknown Organizer"
+            return (
+                str(organizer).split(":")[-1]
+                if organizer
+                else "Unknown Organizer"
+            )
 
     @staticmethod
     def get_names(description):
         # Updated regex to find names in the pattern @name
-        names = re.findall(r'@(\w+)\s', description)
+        names = re.findall(r"@(\w+)\s", description)
         return [name.capitalize() for name in names]
 
     @staticmethod
@@ -102,7 +110,7 @@ class CalendarData:
                 name_out_list.append(i.capitalize())
                 z += 1
             else:
-                fam_name_short = f'{list(i)[0]}.'
+                fam_name_short = f"{list(i)[0]}."
                 name_out_list.append(fam_name_short.capitalize())
         return " ".join(name_out_list)
 

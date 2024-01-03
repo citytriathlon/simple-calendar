@@ -33,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
+          file: ./Dockerfile.en
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
@@ -43,6 +44,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
+          file: ./Dockerfile.ctt
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
