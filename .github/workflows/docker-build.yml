@@ -29,7 +29,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push the Simple-Calendar docker image
+      - name: Build and push the Simple-Calendar docker EN image
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -38,3 +38,13 @@ jobs:
           tags: |
             ghcr.io/citytriathlon/simple-calendar:${{ github.run_number }}
             ghcr.io/citytriathlon/simple-calendar:latest
+
+      - name: Build and push the Simple-Calendar docker CTT image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/citytriathlon/simple-calendar:${{ github.run_number }}-ctt
+            ghcr.io/citytriathlon/simple-calendar:latest-ctt

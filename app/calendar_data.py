@@ -10,7 +10,7 @@ class CalendarData:
     def __init__(self, update_interval=30):
         self.data = {}
         self.update_interval = update_interval
-        self.url = os.environ.get('ICS_URL', 'default_ics_url_here')
+        self.url = os.environ.get('ICS_URL', 'https://www.google.com/calendar/ical/en.usa%23holiday@group.v.calendar.google.com/public/basic.ics')
 
     async def start(self):
         await self.update_data()

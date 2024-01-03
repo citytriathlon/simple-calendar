@@ -2,8 +2,8 @@ services:
   web:
     container_name: simple-calendar
     restart: always
-    build:
-      context: .
-      dockerfile: dockerfile.tech
+    image: ghcr.io/citytriathlon/simple-calendar:latest
     ports:
-      - "0.0.0.0:8000:8000"
+      - "5000:5000"
+    environment:
+      - ICS_URL=""

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
+</head>
+
+<body onload="startTime()">
+    <div class="topbar">
+        <div class="container">
+            <a class="logo" href="#">Simple<span>Calendar</span></a>
+            <input type="text" id="myInput" class="input_box" onkeyup="myFunction();myFunction2()"
+                placeholder="Hledat..">
+        </div>
+    </div>
+    <section>
+        <ul id="myUL" class="ulul">
+            {% for key,value in data.items() %}
+            <li class="date_li">
+                <div class="date" style="background:hsl({{value.0.hue}}, 100%, 91%);">
+                    <div class="date-text">{{key}}</div>
+                    {% for i in value %}
+                    <div class="events">
+                        <ul class="ulul">
+                            <li class="event_li">
+                                <div class="events-vert">
+                                    <div class="event">
+                                        <div class="container-name">
+                                            <a class="namename">{{i.name}}</a>
+                                        </div>
+                                        <div class="container-time-who">
+                                            <a class="timerange">{{i.begin}} - {{i.end}}</a>
+                                            <a class="who">{{i.organizer}}</a>
+                                            <div class="searchstring">{{i.all_strings}}</div>
+                                            <div class="searchstring_date">{{i.all_strings_date}}</div>
+                                            <div class="begin_epoch">{{i.begin_epoch}}</div>
+                                            <div class="end_epoch">{{i.end_epoch}}</div>
+                                        </div>
+                                    </div>
+                                    {% if i.description or i.location %}
+                                    <div class="extend-button">
+                                        <p><i class="arrow"></i></p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if i.description or i.location %}
+                                <div class="description">
+                                    <div class="container">
+                                        {% if i.location %}
+                                        <a class="key">Location</a><br>
+                                        <a class="value">{{i.location}}</a>
+                                        {% endif %}
+                                        {% if i.description and i.location %}
+                                        <br>
+                                        <br>
+                                        {% endif %}
+                                        {% if i.description %}
+                                        <a class="key">Description</a><br>
+                                        {% autoescape off %}
+                                        <div class="value">{{i.description}}</div>
+                                        {% endautoescape %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <script src="{{ url_for('static', filename='scripts/myscripts.js') }}"></script>
+
+</body>
+
+</html>
