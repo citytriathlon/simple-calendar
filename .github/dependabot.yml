@@ -5,3 +5,5 @@ updates:
     schedule:
       interval: "daily"      # "daily", "weekly", or "monthly"
     open-pull-requests-limit: 10
+    reviewers:
+      - "jdrozdnovak"
