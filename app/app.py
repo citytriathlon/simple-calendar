@@ -2,7 +2,7 @@
 from flask import Flask, render_template
 from threading import Thread
 import asyncio
-from calendar_data import CalendarData  # make sure this is the correct path
+from calendar_data import CalendarData
 
 app = Flask(__name__)
 calendar_data = CalendarData()
@@ -21,7 +21,5 @@ def mainpage():
 
 
 if __name__ == "__main__":
-    # Start the async loop in a separate thread
     Thread(target=start_async_loop, daemon=True).start()
-    # Now start the Flask application
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

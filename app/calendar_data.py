@@ -11,10 +11,7 @@ class CalendarData:
     def __init__(self, update_interval=30):
         self.data = {}
         self.update_interval = update_interval
-        self.url = os.environ.get(
-            "ICS_URL",
-            "https://www.google.com/calendar/ical/en.usa%23holiday@group.v.calendar.google.com/public/basic.ics",
-        )
+        self.url = os.environ.get("ICS_URL")
 
     async def start(self):
         await self.update_data()
@@ -78,12 +75,10 @@ class CalendarData:
 
     @staticmethod
     def extract_organizer(organizer, description):
-        # First check for @name patterns in the description
         names = CalendarData.get_names(description)
         if names:
             return ", ".join(names)
 
-        # Fallback to existing logic
         if "@citytriathlon.cz" in str(organizer).split(":")[-1]:
             email = str(organizer).split(":")[-1]
             name = " ".join(email.split("@")[0].split("."))
@@ -97,7 +92,6 @@ class CalendarData:
 
     @staticmethod
     def get_names(description):
-        # Updated regex to find names in the pattern @name
         names = re.findall(r"@(\w+)\s", description)
         return [name.capitalize() for name in names]
 
