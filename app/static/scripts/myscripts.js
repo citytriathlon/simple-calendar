@@ -48,23 +48,28 @@ function startTime() {
 
 
 
-function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
+function filterEvents() {
+    var input, filter, ul, li, searchStrings, txtValue;
     input = document.getElementById('myInput');
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
-    li = ul.getElementsByClassName('event_li');
+    li = ul.getElementsByTagName('li');
 
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByClassName("searchstring")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    for (var i = 0; i < li.length; i++) {
+        // Combine search strings from both 'searchstring' and 'searchstring_date'
+        searchStrings = li[i].getElementsByClassName("searchstring")[0].textContent.toUpperCase() + 
+                        li[i].getElementsByClassName("searchstring_date")[0].textContent.toUpperCase();
+
+        if (searchStrings.indexOf(filter) > -1) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
         }
     }
 }
+
+// Adjust the event listener for the input box
+document.getElementById('myInput').onkeyup = filterEvents;
 
 function myFunction2() {
     var input, filter, ul, li, a, i, txtValue;
