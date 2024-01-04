@@ -1,25 +1,21 @@
-function htmlDecode(input) {
-    var doc = new DOMParser().parseFromString(input, "text/html");
-    return doc.documentElement.textContent;
+function normalizeString(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 }
 
 function filterEvents() {
     var input, filter, ul, li, decodedSearchString;
     input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
+    filter = normalizeString(input.value); // Normalize the input string
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName('li');
 
     for (var i = 0; i < li.length; i++) {
         var searchStringElement = li[i].getElementsByClassName("searchstring")[0];
 
-        // Decode HTML entities and convert to uppercase
-        decodedSearchString = htmlDecode(searchStringElement.textContent).toUpperCase();
+        // Decode HTML entities and normalize
+        decodedSearchString = normalizeString(htmlDecode(searchStringElement.textContent));
 
-        console.log("Filter: ", filter);  // Debugging line
-        console.log("Decoded Search String: ", decodedSearchString); 
-
-        if (decodedSearchString.indexOf(filter) > -1) {
+        if (decodedSearchString.includes(filter)) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
