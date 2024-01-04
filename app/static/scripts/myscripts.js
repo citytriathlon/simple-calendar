@@ -19,9 +19,7 @@ function filterEvents() {
       var searchStringElement =
         eventLi[j].getElementsByClassName("searchstring")[0];
 
-      decodedSearchString = normalizeString(
-        htmlDecode(searchStringElement.textContent)
-      );
+      decodedSearchString = normalizeString(searchStringElement.textContent);
 
       if (decodedSearchString.includes(filter)) {
         eventLi[j].style.display = "";
