@@ -47,6 +47,8 @@ class CalendarData:
         end_epoch = int(event.end.timestamp()) * 1000
         begin_epoch = int(event.begin.timestamp()) * 1000
 
+        search_day = event.begin.format("DD. MM. YYYY")
+
         entry_dict = {
             "begin": event.begin.format("HH:mm") or "",
             "end": event.end.format("HH:mm") or "",
@@ -66,10 +68,9 @@ class CalendarData:
             str(entry_dict["begin"]),
             str(entry_dict["end"]),
             str(entry_dict["description"]),
-            event.begin.format("DD. MM. YYYY"),
         ]
         entry_dict["all_strings"] = " ".join(all_strings)
-        entry_dict["all_strings_date"] = entry_dict["all_strings"]
+        entry_dict["all_strings_date"] = f'{entry_dict["all_strings"]} {search_day}'
 
         return entry_dict
 

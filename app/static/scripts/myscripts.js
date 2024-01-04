@@ -6,27 +6,36 @@ function normalizeString(str) {
 }
 
 function filterEvents() {
-  var input, filter, ul, dateLi, eventLi, decodedSearchString;
+  var input, filter, ul, dateLiElements, eventLiElements, dayMatch;
   input = document.getElementById("myInput");
   filter = normalizeString(input.value);
   ul = document.getElementById("myUL");
-  dateLi = ul.getElementsByClassName("date_li");
+  dateLiElements = ul.getElementsByClassName("date_li");
 
-  for (var i = 0; i < dateLi.length; i++) {
-    eventLi = dateLi[i].getElementsByClassName("event_li");
+  for (var i = 0; i < dateLiElements.length; i++) {
+    eventLiElements = dateLiElements[i].getElementsByClassName("event_li");
+    dayMatch = false;
 
-    for (var j = 0; j < eventLi.length; j++) {
-      var searchStringElement =
-        eventLi[j].getElementsByClassName("searchstring")[0];
+    for (var j = 0; j < eventLiElements.length; j++) {
+      var eventString =
+        eventLiElements[j].getElementsByClassName("searchstring")[0]
+          .textContent;
+      var eventDateString =
+        eventLiElements[j].getElementsByClassName("searchstring_date")[0]
+          .textContent;
 
-      decodedSearchString = normalizeString(searchStringElement.textContent);
-
-      if (decodedSearchString.includes(filter)) {
-        eventLi[j].style.display = "";
+      if (
+        normalizeString(eventString).includes(filter) ||
+        normalizeString(eventDateString).includes(filter)
+      ) {
+        eventLiElements[j].style.display = "";
+        dayMatch = true;
       } else {
-        eventLi[j].style.display = "none";
+        eventLiElements[j].style.display = "none";
       }
     }
+
+    dateLiElements[i].style.display = dayMatch ? "" : "none";
   }
 }
 
