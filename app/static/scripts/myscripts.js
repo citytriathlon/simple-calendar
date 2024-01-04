@@ -1,17 +1,33 @@
-var coll = document.getElementsByClassName("events-vert");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
+function htmlDecode(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
 }
+
+function filterEvents() {
+    var input, filter, ul, li, decodedSearchString;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName('li');
+
+    for (var i = 0; i < li.length; i++) {
+        var searchStringElement = li[i].getElementsByClassName("searchstring")[0];
+
+        // Decode HTML entities and convert to uppercase
+        decodedSearchString = htmlDecode(searchStringElement.textContent).toUpperCase();
+
+        console.log("Filter: ", filter);  // Debugging line
+        console.log("Decoded Search String: ", decodedSearchString); 
+
+        if (decodedSearchString.indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+document.getElementById('myInput').onkeyup = filterEvents;
 
 function startTime() {
     var today, r, t, li, a, b, ul, currentEventFound = false, nextEventElement = null;
@@ -32,7 +48,6 @@ function startTime() {
             }
         } else {
             li[i].style.backgroundColor = (t > b) ? "lightgray" : "";
-            
             if (a > t && !nextEventElement) {
                 nextEventElement = li[i];
             }
@@ -43,31 +58,22 @@ function startTime() {
         nextEventElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    r = setTimeout(startTime, 10000);
+    setTimeout(startTime, 10000);
 }
 
-function filterEvents() {
-    var input, filter, ul, li, searchStrings;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName('li');
-
-    for (var i = 0; i < li.length; i++) {
-        var searchStringElement = li[i].getElementsByClassName("searchstring")[0];
-        var searchDateStringElement = li[i].getElementsByClassName("searchstring_date")[0];
-
-        searchStrings = searchStringElement.textContent.toUpperCase() + 
-                        searchDateStringElement.textContent.toUpperCase();
-
-        if (searchStrings.indexOf(filter) > -1) {
-            li[i].style.display = "";
+var coll = document.getElementsByClassName("events-vert");
+for (var i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
         } else {
-            li[i].style.display = "none";
+            content.style.display = "block";
         }
-    }
+    });
 }
 
-document.getElementById('myInput').onkeyup = filterEvents;
-
-
+document.addEventListener('DOMContentLoaded', function() {
+    startTime();
+});
