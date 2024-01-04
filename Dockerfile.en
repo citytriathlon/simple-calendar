@@ -10,4 +10,4 @@ COPY languages/en/templates/ templates/
 
 EXPOSE 5000
 
-CMD ["uwsgi", "--socket", "0.0.0.0:5000", "--protocol=http", "-w", "wsgi:app"]
+CMD ["python3", "app.py"]
