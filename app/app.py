@@ -19,3 +19,6 @@ def mainpage():
     context = calendar_data.get_recent_events()
     return render_template("index.html", data=context)
 
+if __name__ == "__main__":
+    Thread(target=start_async_loop, daemon=True).start()
+    app.run(debug=True, host='0.0.0.0', port=5000)
