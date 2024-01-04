@@ -61,11 +61,11 @@ class CalendarData:
 
         all_strings = [
             str(entry_dict["name"]),
-            str(entry_dict["description"]),
             str(entry_dict["location"]),
             str(organizer),
             str(entry_dict["begin"]),
             str(entry_dict["end"]),
+            str(entry_dict["description"]),
             event.begin.format("DD. MM. YYYY"),
         ]
         entry_dict["all_strings"] = " ".join(all_strings)

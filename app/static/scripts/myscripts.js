@@ -46,19 +46,19 @@ function startTime() {
     r = setTimeout(startTime, 10000);
 }
 
-
-
 function filterEvents() {
-    var input, filter, ul, li, searchStrings, txtValue;
+    var input, filter, ul, li, searchStrings;
     input = document.getElementById('myInput');
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName('li');
 
     for (var i = 0; i < li.length; i++) {
-        // Combine search strings from both 'searchstring' and 'searchstring_date'
-        searchStrings = li[i].getElementsByClassName("searchstring")[0].textContent.toUpperCase() + 
-                        li[i].getElementsByClassName("searchstring_date")[0].textContent.toUpperCase();
+        var searchStringElement = li[i].getElementsByClassName("searchstring")[0];
+        var searchDateStringElement = li[i].getElementsByClassName("searchstring_date")[0];
+
+        searchStrings = searchStringElement.textContent.toUpperCase() + 
+                        searchDateStringElement.textContent.toUpperCase();
 
         if (searchStrings.indexOf(filter) > -1) {
             li[i].style.display = "";
@@ -68,7 +68,6 @@ function filterEvents() {
     }
 }
 
-// Adjust the event listener for the input box
 document.getElementById('myInput').onkeyup = filterEvents;
 
 

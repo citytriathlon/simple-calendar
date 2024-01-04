@@ -31,6 +31,10 @@ body{
     flex-shrink: 0; /* Prevent logo from growing */
 }
 
+.topbar .logo span {
+    color: var(--primary-color);
+  }
+
 .topbar .input_box {
     flex-grow: 1; /* Grow to fill available space */
     font-size: 1em;
