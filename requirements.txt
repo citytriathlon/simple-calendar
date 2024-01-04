@@ -3,3 +3,4 @@ ics==0.7.2
 aiohttp==3.9.1
 pytz
 requests
+uwsgi==2.0.23
