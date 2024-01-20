@@ -1,3 +1,5 @@
+var hasScrolledInitially = false;
+
 function normalizeString(str) {
   return str
     .normalize("NFD")
@@ -59,18 +61,13 @@ function startTime() {
     }
   }
 
-  setTimeout(startTime, 10000); // Keep updating the time and colors
+  setTimeout(startTime, 10000);
 }
 
-function scrollToEvent() {
-  var today,
-    t,
-    li,
-    a,
-    b,
-    ul,
-    currentEventFound = false,
-    nextEventElement = null;
+function initialScrollToEvent() {
+  if (hasScrolledInitially) return;
+
+  var today, t, li, a, b, ul, currentEventFound = false, nextEventElement = null;
   today = new Date();
   t = today.getTime();
   ul = document.getElementById("myUL");
@@ -90,6 +87,7 @@ function scrollToEvent() {
 
   if (!currentEventFound && nextEventElement) {
     nextEventElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    hasScrolledInitially = true;
   }
 }
 
@@ -108,5 +106,5 @@ for (var i = 0; i < coll.length; i++) {
 
 document.addEventListener("DOMContentLoaded", function () {
   startTime();
-  scrollToEvent(); // Call only on page load
+  initialScrollToEvent();
 });
