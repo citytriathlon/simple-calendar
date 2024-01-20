@@ -93,7 +93,7 @@ class CalendarData:
 
     @staticmethod
     def get_names(description):
-        names = re.findall(r"@(\w+)\s", description)
+        names = re.findall(r"(?<=^| )@(\w+)(?=$| )", description, re.MULTILINE)
         return [name.capitalize() for name in names]
 
     @staticmethod

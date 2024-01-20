@@ -42,8 +42,28 @@ function filterEvents() {
 document.getElementById("myInput").onkeyup = filterEvents;
 
 function startTime() {
+  var today, r, t, li, a, b, ul;
+  today = new Date();
+  t = today.getTime();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByClassName("event_li");
+
+  for (var i = 0; i < li.length; i++) {
+    a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
+    b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
+
+    if (b > t && t > a) {
+      li[i].style.backgroundColor = "lightblue";
+    } else {
+      li[i].style.backgroundColor = t > b ? "lightgray" : "";
+    }
+  }
+
+  setTimeout(startTime, 10000); // Keep updating the time and colors
+}
+
+function scrollToEvent() {
   var today,
-    r,
     t,
     li,
     a,
@@ -60,25 +80,17 @@ function startTime() {
     a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
     b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
 
-    if (b > t && t > a) {
-      li[i].style.backgroundColor = "lightblue";
-      if (!currentEventFound) {
-        li[i].scrollIntoView({ behavior: "smooth", block: "center" });
-        currentEventFound = true;
-      }
-    } else {
-      li[i].style.backgroundColor = t > b ? "lightgray" : "";
-      if (a > t && !nextEventElement) {
-        nextEventElement = li[i];
-      }
+    if (b > t && t > a && !currentEventFound) {
+      li[i].scrollIntoView({ behavior: "smooth", block: "center" });
+      currentEventFound = true;
+    } else if (a > t && !nextEventElement) {
+      nextEventElement = li[i];
     }
   }
 
   if (!currentEventFound && nextEventElement) {
     nextEventElement.scrollIntoView({ behavior: "smooth", block: "center" });
   }
-
-  setTimeout(startTime, 10000);
 }
 
 var coll = document.getElementsByClassName("events-vert");
@@ -96,4 +108,5 @@ for (var i = 0; i < coll.length; i++) {
 
 document.addEventListener("DOMContentLoaded", function () {
   startTime();
+  scrollToEvent(); // Call only on page load
 });
