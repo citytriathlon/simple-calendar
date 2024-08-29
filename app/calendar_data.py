@@ -1,57 +1,60 @@
-# calendar_data.py
 import asyncio
 import aiohttp
 import os
 from ics import Calendar
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import pytz
 import re
 
 
 class CalendarData:
-    def __init__(self, update_interval=30):
+    def __init__(self, update_interval: int = 30) -> None:
         self.data = {}
         self.update_interval = update_interval
         self.url = os.environ.get("ICS_URL")
+        self.timezone = os.environ.get("TIMEZONE","Europe/Prague")
+        self.local_tz = pytz.timezone(self.timezone)
 
-    async def start(self):
+    async def start(self) -> None:
         await self.update_data()
 
-    async def update_data(self):
+    async def update_data(self) -> None:
         while True:
             new_data = await self.fetch_calendar_data()
             self.data = new_data
             await asyncio.sleep(self.update_interval)
 
-    async def fetch_calendar_data(self):
+    async def fetch_calendar_data(self) -> dict:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.url) as response:
                 text = await response.text()
                 calendar = Calendar(text)
 
-        one_day_ago = datetime.now() - timedelta(days=1)
-        one_day_ago = one_day_ago.replace(tzinfo=None)
+        one_day_ago = datetime.now(timezone.utc) - timedelta(days=1)
         output = {}
 
         for event in calendar.timeline:
-            event_date = event.begin.datetime.replace(tzinfo=None)
+            event_date = event.begin.datetime.astimezone(self.local_tz)
             if event_date > one_day_ago:
                 date_str = event_date.strftime("%d. %m. %Y")
                 entry_dict = self.process_event(event)
                 output.setdefault(date_str, []).append(entry_dict)
         return output
 
-    def process_event(self, event):
-        day = event.begin.day
+    def process_event(self, event) -> dict:
+        event_begin = event.begin.astimezone(self.local_tz)
+        event_end = event.end.astimezone(self.local_tz)
+        day = event_begin.day
         random_hue = day * 10 if (day % 2) == 0 else 360 - (day * 10)
         organizer = self.extract_organizer(event.organizer, event.description)
-        end_epoch = int(event.end.timestamp()) * 1000
-        begin_epoch = int(event.begin.timestamp()) * 1000
+        end_epoch = int(event_end.timestamp()) * 1000
+        begin_epoch = int(event_begin.timestamp()) * 1000
 
-        search_day = event.begin.format("DD. MM. YYYY")
+        search_day = event_begin.strftime("DD. MM. YYYY")
 
         entry_dict = {
-            "begin": event.begin.format("HH:mm") or "",
-            "end": event.end.format("HH:mm") or "",
+            "begin": event_begin.strftime("%H:%M") or "",
+            "end": event_end.strftime("%H:%M") or "",
             "name": event.name or "",
             "description": event.description or "",
             "location": event.location or "",
@@ -75,7 +78,7 @@ class CalendarData:
         return entry_dict
 
     @staticmethod
-    def extract_organizer(organizer, description):
+    def extract_organizer(organizer, description: str) -> str:
         names = CalendarData.get_names(description)
         if names:
             return ", ".join(names)
@@ -92,13 +95,13 @@ class CalendarData:
             )
 
     @staticmethod
-    def get_names(description):
+    def get_names(description: str) -> list:
         pattern = r"(?<!\w)@(\w+)"
         matches = re.findall(pattern, description, re.MULTILINE)
         return [match.capitalize() for match in matches]
 
     @staticmethod
-    def name_mod(name_in):
+    def name_mod(name_in: str) -> str:
         name_out_list = []
         z = 0
         for i in name_in.split(" "):
@@ -110,5 +113,5 @@ class CalendarData:
                 name_out_list.append(fam_name_short.capitalize())
         return " ".join(name_out_list)
 
-    def get_recent_events(self):
+    def get_recent_events(self) -> dict:
         return self.data.copy()
