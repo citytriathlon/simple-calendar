@@ -8,20 +8,28 @@ function normalizeString(str) {
 }
 
 function filterEvents() {
-  var input = document.getElementById("myInput");
-  var filter = normalizeString(input.value);
-  var ul = document.getElementById("myUL");
-  var dateLiElements = ul.getElementsByClassName("date_li");
+  var input, filter, ul, dateLiElements, eventLiElements, dayMatch;
+  input = document.getElementById("myInput");
+  filter = normalizeString(input.value);
+  ul = document.getElementById("myUL");
+  dateLiElements = ul.getElementsByClassName("date_li");
 
   for (var i = 0; i < dateLiElements.length; i++) {
-    var eventLiElements = dateLiElements[i].getElementsByClassName("event_li");
-    var dayMatch = false;
+    eventLiElements = dateLiElements[i].getElementsByClassName("event_li");
+    dayMatch = false;
 
     for (var j = 0; j < eventLiElements.length; j++) {
-      var eventString = normalizeString(eventLiElements[j].getElementsByClassName("searchstring")[0].textContent);
-      var eventDateString = normalizeString(eventLiElements[j].getElementsByClassName("searchstring_date")[0].textContent);
+      var eventString =
+        eventLiElements[j].getElementsByClassName("searchstring")[0]
+          .textContent;
+      var eventDateString =
+        eventLiElements[j].getElementsByClassName("searchstring_date")[0]
+          .textContent;
 
-      if (eventString.includes(filter) || eventDateString.includes(filter)) {
+      if (
+        normalizeString(eventString).includes(filter) ||
+        normalizeString(eventDateString).includes(filter)
+      ) {
         eventLiElements[j].style.display = "";
         dayMatch = true;
       } else {
@@ -36,14 +44,15 @@ function filterEvents() {
 document.getElementById("myInput").onkeyup = filterEvents;
 
 function startTime() {
-  var today = new Date();
-  var t = today.getTime();
-  var ul = document.getElementById("myUL");
-  var li = ul.getElementsByClassName("event_li");
+  var today, r, t, li, a, b, ul;
+  today = new Date();
+  t = today.getTime();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByClassName("event_li");
 
   for (var i = 0; i < li.length; i++) {
-    var a = parseInt(li[i].getAttribute("data-begin_epoch"));
-    var b = parseInt(li[i].getAttribute("data-end_epoch"));
+    a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
+    b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
 
     if (b > t && t > a) {
       li[i].style.backgroundColor = "lightblue";
@@ -58,22 +67,19 @@ function startTime() {
 function initialScrollToEvent() {
   if (hasScrolledInitially) return;
 
-  var today = new Date();
-  var t = today.getTime();
-  var ul = document.getElementById("myUL");
-  var li = ul.getElementsByClassName("event_li");
-  var currentEventFound = false;
-  var nextEventElement = null;
+  var today, t, li, a, b, ul, currentEventFound = false, nextEventElement = null;
+  today = new Date();
+  t = today.getTime();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByClassName("event_li");
 
   for (var i = 0; i < li.length; i++) {
-    var a = parseInt(li[i].getAttribute("data-begin_epoch"));
-    var b = parseInt(li[i].getAttribute("data-end_epoch"));
+    a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
+    b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
 
     if (b > t && t > a && !currentEventFound) {
       li[i].scrollIntoView({ behavior: "smooth", block: "center" });
       currentEventFound = true;
-      hasScrolledInitially = true;
-      break;
     } else if (a > t && !nextEventElement) {
       nextEventElement = li[i];
     }
@@ -90,10 +96,10 @@ for (var i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var content = this.nextElementSibling;
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
+    if (content.style.display === "block") {
+      content.style.display = "none";
     } else {
-      content.style.maxHeight = content.scrollHeight + "px";
+      content.style.display = "block";
     }
   });
 }
