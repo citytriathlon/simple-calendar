@@ -1,5 +1,5 @@
 flask==3.0.3
 ics==0.7.2
-aiohttp==3.10.8
+aiohttp==3.11.0
 pytz
 requests
