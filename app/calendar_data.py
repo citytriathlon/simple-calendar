@@ -1,10 +1,12 @@
 import asyncio
 import aiohttp
 import os
-from ics import Calendar
+import logging
+from ics import Calendar, Event
 from datetime import datetime, timedelta, timezone
 import pytz
 import re
+from typing import Optional, Dict, List, Any
 
 
 class CalendarData:
@@ -14,17 +16,22 @@ class CalendarData:
         self.url = os.environ.get("ICS_URL")
         self.timezone = os.environ.get("TIMEZONE","Europe/Prague")
         self.local_tz = pytz.timezone(self.timezone)
-
-    async def start(self) -> None:
-        await self.update_data()
+        if not self.url:
+            logging.error("ICS_URL environment variable not set.")
 
     async def update_data(self) -> None:
         while True:
-            new_data = await self.fetch_calendar_data()
-            self.data = new_data
+            if self.url:
+                try:
+                    new_data = await self.fetch_calendar_data()
+                    self.data = new_data
+                except aiohttp.ClientError as e:
+                    logging.error(f"Error fetching calendar data: {e}")
+                except Exception as e:
+                    logging.error(f"An unexpected error occurred: {e}")
             await asyncio.sleep(self.update_interval)
 
-    async def fetch_calendar_data(self) -> dict:
+    async def fetch_calendar_data(self) -> Dict[str, List[Dict[str, Any]]]:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.url) as response:
                 text = await response.text()
@@ -41,7 +48,7 @@ class CalendarData:
                 output.setdefault(date_str, []).append(entry_dict)
         return output
 
-    def process_event(self, event) -> dict:
+    def process_event(self, event: Event) -> Dict[str, Any]:
         event_begin = event.begin.astimezone(self.local_tz)
         event_end = event.end.astimezone(self.local_tz)
         day = event_begin.day
@@ -50,7 +57,7 @@ class CalendarData:
         end_epoch = int(event_end.timestamp()) * 1000
         begin_epoch = int(event_begin.timestamp()) * 1000
 
-        search_day = event_begin.strftime("DD. MM. YYYY")
+        search_day = event_begin.strftime("%d. %m. %Y")
 
         entry_dict = {
             "begin": event_begin.strftime("%H:%M") or "",
@@ -78,8 +85,8 @@ class CalendarData:
         return entry_dict
 
     @staticmethod
-    def extract_organizer(organizer, description: str) -> str:
-        names = CalendarData.get_names(description)
+    def extract_organizer(organizer: Optional[str], description: Optional[str]) -> str:
+        names = CalendarData.get_names(description or "")
         if names:
             return ", ".join(names)
 
@@ -87,31 +94,28 @@ class CalendarData:
             email = str(organizer).split(":")[-1]
             name = " ".join(email.split("@")[0].split("."))
             return CalendarData.name_mod(name)
-        else:
-            return (
-                str(organizer).split(":")[-1]
-                if organizer
-                else "Unknown Organizer"
-            )
+        
+        if organizer:
+            return str(organizer).split(":")[-1]
+
+        return "Unknown Organizer"
 
     @staticmethod
-    def get_names(description: str) -> list:
+    def get_names(description: str) -> List[str]:
+        if not description:
+            return []
         pattern = r"(?<!\w)@(\w+)"
         matches = re.findall(pattern, description, re.MULTILINE)
         return [match.capitalize() for match in matches]
 
     @staticmethod
     def name_mod(name_in: str) -> str:
-        name_out_list = []
-        z = 0
-        for i in name_in.split(" "):
-            if z == 0:
-                name_out_list.append(i.capitalize())
-                z += 1
-            else:
-                fam_name_short = f"{list(i)[0]}."
-                name_out_list.append(fam_name_short.capitalize())
-        return " ".join(name_out_list)
+        parts = name_in.split(" ")
+        if not parts:
+            return ""
+        first_name = parts[0].capitalize()
+        last_initials = [f"{p[0].upper()}." for p in parts[1:] if p]
+        return " ".join([first_name] + last_initials)
 
-    def get_recent_events(self) -> dict:
+    def get_recent_events(self) -> Dict[str, List[Dict[str, Any]]]:
         return self.data.copy()

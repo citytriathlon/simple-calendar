@@ -11,7 +11,7 @@ calendar_data = CalendarData()
 def start_async_loop():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    loop.run_until_complete(calendar_data.start())
+    loop.run_until_complete(calendar_data.update_data())
 
 
 @app.route("/")
