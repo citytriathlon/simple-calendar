@@ -6,4 +6,25 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - ICS_URL=
+      # Required: the ICS feed to display.
+      - ICS_URL=${ICS_URL:?set ICS_URL in .env}
+      # UI language: "en" or "ctt".
+      - APP_LANG=${APP_LANG:-en}
+      - TIMEZONE=${TIMEZONE:-Europe/Prague}
+      # Optional: organizer addresses on this domain render as "First L.".
+      - ORGANIZER_DOMAIN=${ORGANIZER_DOMAIN:-}
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import sys,urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=4).status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

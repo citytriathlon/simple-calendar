@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
+
 :root {
   --primary-color: blue;
 }
@@ -6,7 +7,19 @@
 body {
   background: #f0efef;
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .topbar {
@@ -15,6 +28,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
+  box-sizing: border-box;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -22,11 +36,11 @@ body {
 }
 
 .topbar .logo {
+  margin: 0 1em 0 0;
   text-decoration: none;
   font-weight: bold;
   color: red;
   font-size: 1.2em;
-  margin-right: 1em;
   flex-shrink: 0;
 }
 
@@ -36,62 +50,91 @@ body {
 
 .topbar .input_box {
   flex-grow: 1;
+  min-width: 0;
   font-size: 1em;
   border: 1px solid #ddd;
   padding: 0.5em;
   margin-left: auto;
 }
 
-section {
+main {
+  display: block;
   margin-top: 3.2em;
 }
-section .events .event_li {
+
+main .events .event_li {
   margin: 0 0.5em 1em 0.5em;
   background: white;
   border-radius: 5px 20px 20px 20px;
   box-shadow: 1px 1px 3px var(--primary-color);
 }
-section .events .events-vert {
+
+main .events .events-vert {
   display: flex;
   margin: 0em 0.5em;
   align-items: center;
 }
-section .events .events-vert .event {
+
+main .events .events-vert[role="button"] {
+  cursor: pointer;
+}
+
+main .events .events-vert:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+main .events .events-vert .event {
   flex: 3;
+  min-width: 0;
   margin-right: 0.3em;
 }
-section .events .events-vert .event .container-time-who {
+
+main .events .events-vert .event .container-time-who {
   display: flex;
   place-content: space-between;
+  gap: 0.5em;
+  flex-wrap: wrap;
 }
-section .events .events-vert .event .container-name {
+
+main .events .events-vert .event .container-name {
   text-align: center;
   font-size: 1.1em;
   font-weight: bold;
 }
-section .events .events-vert .event .spacing {
+
+main .events .events-vert .event .spacing {
   color: rgb(177, 177, 177);
   font-size: 1.1em;
 }
-section .events .events-vert .extend-button {
+
+main .events .events-vert .extend-button {
   margin: 0em 0.5em;
   cursor: pointer;
 }
-section .events .description {
+
+main .events .description {
   display: none;
   overflow: hidden;
   background: rgb(207, 207, 207);
   border-radius: 0px 0px 20px 20px;
 }
-section .events .description .container {
+
+main .events .description .description-inner {
   margin: 0em 0.5em 0.5em 0.5em;
 }
-section .events .description .container .key {
+
+main .events .description .description-inner .key {
   font-size: 1.1em;
   font-weight: bold;
 }
-section .events .description .container .value {
+
+main .events .description .description-inner .value {
   color: rgb(34, 33, 33);
+  /* Descriptions are HTML-escaped, so newlines are preserved here rather than
+     by rendering raw markup from the feed. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .arrow {
@@ -107,7 +150,10 @@ section .events .description .container .value {
   margin: 0;
   padding-left: 0.5em;
 }
+
 .date .date-text {
+  margin: 0;
+  padding: 0.2em 0;
   font-size: 1.1em;
   font-weight: bold;
   color: rgb(48, 48, 48);
@@ -119,18 +165,33 @@ section .events .description .container .value {
   margin: 0;
 }
 
-.searchstring {
-  display: none;
+.empty {
+  padding: 2em 0.5em;
+  text-align: center;
+  color: rgb(90, 90, 90);
 }
 
-.searchstring_date {
-  display: none;
-}
-
+.searchstring,
+.searchstring_date,
+.begin_epoch,
 .end_epoch {
   display: none;
 }
 
-.begin_epoch {
-  display: none;
-}/*# sourceMappingURL=main.css.map */
+@media (min-width: 48em) {
+  main {
+    max-width: 60em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .topbar .input_box {
+    max-width: 24em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

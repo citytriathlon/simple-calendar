@@ -1,9 +1,23 @@
 version: 2
 updates:
-  - package-ecosystem: "pip"  # See documentation for possible values
-    directory: "/"            # Location of package manifests
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: "daily"      # "daily", "weekly", or "monthly"
+      interval: "weekly"
     open-pull-requests-limit: 10
+    reviewers:
+      - "jdrozdnovak"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "jdrozdnovak"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
     reviewers:
       - "jdrozdnovak"
