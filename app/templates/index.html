@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="{{ s.lang }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ s.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
+</head>
+
+<body>
+    <header class="topbar">
+        <h1 class="logo">{{ s.logo_prefix }}<span>{{ s.logo_suffix }}</span></h1>
+        <label class="visually-hidden" for="myInput">{{ s.search_label }}</label>
+        <input type="search" id="myInput" class="input_box" placeholder="{{ s.search_placeholder }}">
+    </header>
+    <main>
+        <ul id="myUL" class="ulul">
+            {% for key, value in data.items() %}
+            <li class="date_li">
+                <div class="date" style="background:hsl({{ value.0.hue }}, 100%, 91%);">
+                    <h2 class="date-text">{{ key }}</h2>
+                    {% for i in value %}
+                    {% set expandable = i.description or i.location %}
+                    <div class="events">
+                        <ul class="ulul">
+                            <li class="event_li">
+                                <div class="events-vert" {% if expandable %}role="button" tabindex="0"
+                                    aria-expanded="false"{% endif %}>
+                                    <div class="event">
+                                        <div class="container-name">
+                                            <span class="namename">{{ i.name }}</span>
+                                        </div>
+                                        <div class="container-time-who">
+                                            <span class="timerange">
+                                                {%- if i.all_day %}{{ s.all_day }}{% else %}{{ i.begin }} - {{ i.end }}{% endif -%}
+                                            </span>
+                                            <span class="who">{{ i.organizer }}</span>
+                                            <div class="searchstring">{{ i.all_strings }}</div>
+                                            <div class="searchstring_date">{{ i.all_strings_date }}</div>
+                                            <div class="begin_epoch">{{ i.begin_epoch }}</div>
+                                            <div class="end_epoch">{{ i.end_epoch }}</div>
+                                        </div>
+                                    </div>
+                                    {% if expandable %}
+                                    <div class="extend-button" aria-hidden="true">
+                                        <p><i class="arrow"></i></p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if expandable %}
+                                <div class="description">
+                                    <div class="description-inner">
+                                        {% if i.location %}
+                                        <span class="key">{{ s.location }}</span><br>
+                                        <div class="value">{{ i.location }}</div>
+                                        {% endif %}
+                                        {% if i.description and i.location %}
+                                        <br>
+                                        {% endif %}
+                                        {% if i.description %}
+                                        <span class="key">{{ s.description }}</span><br>
+                                        <div class="value">{{ i.description }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </li>
+            {% else %}
+            <li class="empty">{{ s.empty }}</li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <script src="{{ url_for('static', filename='scripts/myscripts.js') }}"></script>
+
+</body>
+
+</html>

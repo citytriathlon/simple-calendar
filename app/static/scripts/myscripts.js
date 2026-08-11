@@ -1,4 +1,4 @@
-var hasScrolledInitially = false;
+var HIGHLIGHT_INTERVAL_MS = 10000;
 
 function normalizeString(str) {
   return str
@@ -8,20 +8,20 @@ function normalizeString(str) {
 }
 
 function filterEvents() {
-  var input, filter, ul, dateLiElements, eventLiElements, dayMatch;
-  input = document.getElementById("myInput");
-  filter = normalizeString(input.value);
-  ul = document.getElementById("myUL");
-  dateLiElements = ul.getElementsByClassName("date_li");
+  var input = document.getElementById("myInput");
+  var ul = document.getElementById("myUL");
+  if (!input || !ul) return;
+
+  var filter = normalizeString(input.value);
+  var dateLiElements = ul.getElementsByClassName("date_li");
 
   for (var i = 0; i < dateLiElements.length; i++) {
-    eventLiElements = dateLiElements[i].getElementsByClassName("event_li");
-    dayMatch = false;
+    var eventLiElements = dateLiElements[i].getElementsByClassName("event_li");
+    var dayMatch = false;
 
     for (var j = 0; j < eventLiElements.length; j++) {
       var eventString =
-        eventLiElements[j].getElementsByClassName("searchstring")[0]
-          .textContent;
+        eventLiElements[j].getElementsByClassName("searchstring")[0].textContent;
       var eventDateString =
         eventLiElements[j].getElementsByClassName("searchstring_date")[0]
           .textContent;
@@ -41,70 +41,91 @@ function filterEvents() {
   }
 }
 
-document.getElementById("myInput").onkeyup = filterEvents;
-
-function startTime() {
-  var today, r, t, li, a, b, ul;
-  today = new Date();
-  t = today.getTime();
-  ul = document.getElementById("myUL");
-  li = ul.getElementsByClassName("event_li");
-
-  for (var i = 0; i < li.length; i++) {
-    a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
-    b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
-
-    if (b > t && t > a) {
-      li[i].style.backgroundColor = "lightblue";
-    } else {
-      li[i].style.backgroundColor = t > b ? "lightgray" : "";
-    }
-  }
-
-  setTimeout(startTime, 10000);
+function eventRows() {
+  var ul = document.getElementById("myUL");
+  return ul ? ul.getElementsByClassName("event_li") : [];
 }
 
-function initialScrollToEvent() {
-  if (hasScrolledInitially) return;
+function epochOf(row, className) {
+  var node = row.getElementsByClassName(className)[0];
+  return node ? parseInt(node.innerText, 10) : NaN;
+}
 
-  var today, t, li, a, b, ul, currentEventFound = false, nextEventElement = null;
-  today = new Date();
-  t = today.getTime();
-  ul = document.getElementById("myUL");
-  li = ul.getElementsByClassName("event_li");
+function highlightCurrentEvents() {
+  var now = Date.now();
+  var rows = eventRows();
 
-  for (var i = 0; i < li.length; i++) {
-    a = parseInt(li[i].getElementsByClassName("begin_epoch")[0].innerText);
-    b = parseInt(li[i].getElementsByClassName("end_epoch")[0].innerText);
+  for (var i = 0; i < rows.length; i++) {
+    var begin = epochOf(rows[i], "begin_epoch");
+    var end = epochOf(rows[i], "end_epoch");
 
-    if (b > t && t > a && !currentEventFound) {
-      li[i].scrollIntoView({ behavior: "smooth", block: "center" });
-      currentEventFound = true;
-    } else if (a > t && !nextEventElement) {
-      nextEventElement = li[i];
+    if (now > begin && now < end) {
+      rows[i].style.backgroundColor = "lightblue";
+    } else {
+      rows[i].style.backgroundColor = now > end ? "lightgray" : "";
     }
   }
 
-  if (!currentEventFound && nextEventElement) {
+  setTimeout(highlightCurrentEvents, HIGHLIGHT_INTERVAL_MS);
+}
+
+function scrollToRelevantEvent() {
+  var now = Date.now();
+  var rows = eventRows();
+  var nextEventElement = null;
+
+  for (var i = 0; i < rows.length; i++) {
+    var begin = epochOf(rows[i], "begin_epoch");
+    var end = epochOf(rows[i], "end_epoch");
+
+    if (now > begin && now < end) {
+      rows[i].scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (begin > now && !nextEventElement) {
+      nextEventElement = rows[i];
+    }
+  }
+
+  if (nextEventElement) {
     nextEventElement.scrollIntoView({ behavior: "smooth", block: "center" });
-    hasScrolledInitially = true;
   }
 }
 
-var coll = document.getElementsByClassName("events-vert");
-for (var i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
+function toggleDescription(row) {
+  // Only rows with a description or location get a panel rendered.
+  var content = row.nextElementSibling;
+  if (!content || content.className.indexOf("description") === -1) return;
+
+  var isOpen = content.style.display === "block";
+  content.style.display = isOpen ? "none" : "block";
+  row.classList.toggle("active", !isOpen);
+  row.setAttribute("aria-expanded", isOpen ? "false" : "true");
+}
+
+function wireExpanders() {
+  var rows = document.getElementsByClassName("events-vert");
+
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].getAttribute("role") !== "button") continue;
+
+    rows[i].addEventListener("click", function () {
+      toggleDescription(this);
+    });
+
+    rows[i].addEventListener("keydown", function (event) {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      toggleDescription(this);
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  startTime();
-  initialScrollToEvent();
+  var input = document.getElementById("myInput");
+  if (input) input.addEventListener("input", filterEvents);
+
+  wireExpanders();
+  highlightCurrentEvents();
+  scrollToRelevantEvent();
 });
